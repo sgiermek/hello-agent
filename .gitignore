@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.ruff_cache/
+
+# Local environment files (per-environment, created on the deploy host)
+docker/compose/dev/.env
+docker/compose/stage/.env
+
+# Editor
+.vscode/
+.idea/

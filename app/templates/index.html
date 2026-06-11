@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello Agent's World</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body data-env="{{ app_env }}">
+    <main class="card">
+        <h1>Hello, Agent's World!</h1>
+        <p class="meta">Environment: <strong>{{ app_env }}</strong></p>
+        <p class="meta">Version: <strong>{{ app_version }}</strong></p>
+    </main>
+</body>
+</html>
