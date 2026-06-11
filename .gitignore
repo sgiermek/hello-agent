@@ -12,3 +12,6 @@ docker/compose/stage/.env
 # Editor
 .vscode/
 .idea/
+
+# Local Claude Code settings (machine-specific permissions)
+.claude/settings.local.json
