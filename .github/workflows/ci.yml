@@ -32,6 +32,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Resolve short SHA
+        id: vars
+        run: echo "sha_short=$(git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
+
       - name: Build Docker image (no push)
         uses: docker/build-push-action@v6
         with:
@@ -39,4 +43,4 @@ jobs:
           push: false
           tags: hello-agent:ci
           build-args: |
-            APP_VERSION=${{ github.sha }}
+            APP_VERSION=${{ steps.vars.outputs.sha_short }}
