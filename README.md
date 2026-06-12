@@ -43,11 +43,33 @@ docker build -t hello-agent:local --build-arg APP_VERSION=$(git rev-parse --shor
 docker run --rm -p 8000:8000 -e APP_ENV=local hello-agent:local
 ```
 
+## Deploy host setup (one-time)
+
+CI/CD does **not** create the compose stack on the deploy host — before the
+first CD run for an environment, create it manually:
+
+```bash
+# on the deploy host (e.g. rusty), as the deploy user
+mkdir -p ~/deploy/hello-agent/{dev,stage}
+
+# copy each environment's files from this repo, e.g.:
+#   docker/compose/dev/docker-compose.yml   -> ~/deploy/hello-agent/dev/docker-compose.yml
+#   docker/compose/dev/.env.example         -> ~/deploy/hello-agent/dev/.env
+# (and the same for stage)
+```
+
+The GHCR package (`hello-agent`) must also be **public** so
+`docker compose pull` on the host needs no authentication. Without this
+setup, `docker compose pull`/`up` fail with "no configuration file provided"
+and the deploy step's health check fails. See
+[`docs/rusty-setup.md`](docs/rusty-setup.md) for the full runbook.
+
 ## Documentation
 
 - [`docs/architecture.md`](docs/architecture.md) — app structure, configuration, dev/stage rationale
 - [`docs/deployment.md`](docs/deployment.md) — CI/CD pipeline, image tagging, rollback
 - [`docs/rusty-setup.md`](docs/rusty-setup.md) — one-time setup of the deploy server ("rusty")
+- [`docs/lessons-learned.md`](docs/lessons-learned.md) — gotchas from getting CI/CD running end-to-end
 - [`docs/agent-workflow.md`](docs/agent-workflow.md) — using Claude Code as `dev-agent` to extend this app
 
 Agent-specific operating rules (Docker permissions, do/don't) live in
